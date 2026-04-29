@@ -8,6 +8,8 @@ using System.Text;
 using WSAgro.DAO.Extensiones;
 using WSAgro.SERVICE.Extensiones;
 using System.Security.Cryptography;
+using WSAgro.DAO.Interfaces;
+using WSAgro.SERVICE.Implementaciones;
 
 namespace WSAgro.Extensiones;
 
@@ -66,6 +68,10 @@ public static class ServiceExtensions
         // Persistencia y servicios
         builder.Services.AddPersistencia(builder.Configuration);
         builder.Services.AddServices();
+
+        // Multi-Tenant
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 
         // Controladores
         builder.Services.AddControllers();

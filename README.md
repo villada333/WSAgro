@@ -48,6 +48,19 @@ Este microservicio **delega la autenticación** al sistema central `WS_Auth`.
 
 ---
 
+## 🏢 Aislamiento Multi-Tenant (Segregación de Datos)
+
+WSAgro implementa una arquitectura nativa y estricta para garantizar que una empresa nunca interactúe con los datos de otra, sin requerir esfuerzo manual por parte del desarrollador de la capa Service o API.
+
+La implementación consta de tres capas de defensa integradas:
+1. **El Proveedor (`ITenantProvider`):** Almacena en memoria el ID del Tenant durante el ciclo de vida de la petición HTTP.
+2. **El Portero (`TenantMiddleware`):** Intercepta todas las peticiones HTTP, extrae el `Company_ID` directamente del Token JWT (o del header alternativo `X-Company-ID` si viene desde el Gateway) y lo inyecta en el proveedor.
+3. **El Motor de Datos (`DbContexto`):**
+   - **Global Query Filters:** Todas las consultas `GET` de Entity Framework Core (`_context.Lote.ToListAsync()`) incluyen de forma oculta un `WHERE tenant_id = 'mi_empresa'`.
+   - **Intercepción de Guardado:** Al hacer `POST` o `PUT`, el método `SaveChangesAsync()` inyecta automáticamente el `tenant_id` correcto a todas las entidades nuevas antes de enviarlas a Supabase.
+
+---
+
 ## 🩺 Monitoreo de Salud (Health Checks)
 
 El microservicio cuenta con un endpoint público para validar rápidamente si la aplicación está en línea y procesando solicitudes. Esto es ideal para configurar pruebas de disponibilidad en servicios de infraestructura en la nube (ej. Render, Docker).

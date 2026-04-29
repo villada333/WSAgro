@@ -1,5 +1,6 @@
 using AspNetCoreRateLimit;
 using Hangfire;
+using WSAgro.Middlewares;
 
 namespace WSAgro.Extensiones;
 
@@ -22,6 +23,8 @@ public static class AppBuilderExtend
         app.UseAuthentication();
 
         app.UseAuthorization();
+
+        app.UseMiddleware<TenantMiddleware>();
 
         app.UseHangfireDashboard();
 

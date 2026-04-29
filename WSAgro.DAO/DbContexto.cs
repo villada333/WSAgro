@@ -1,13 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using WSAgro.DAO.Entidades;
 using WSAgro.DAO.Mapeos;
+using WSAgro.DAO.Interfaces;
 
 namespace WSAgro.DAO;
 
 public class DbContexto : DbContext
 {
-    public DbContexto(DbContextOptions<DbContexto> options) : base(options)
+    private readonly ITenantProvider _tenantProvider;
+    public string TenantId => _tenantProvider?.GetTenantId() ?? string.Empty;
+
+    public DbContexto(DbContextOptions<DbContexto> options, ITenantProvider tenantProvider) : base(options)
     {
+        _tenantProvider = tenantProvider;
     }
 
     public DbSet<AnalisisRecurso> AnalisisRecurso { get; set; }
@@ -51,5 +56,43 @@ public class DbContexto : DbContext
         modelBuilder.ApplyConfiguration(new RegistroCosechaMap());
         modelBuilder.ApplyConfiguration(new RemisionDespachoMap());
         modelBuilder.ApplyConfiguration(new UmbralAccionFincaMap());
+
+        // Aislamiento Multi-Tenant (Global Query Filters)
+        modelBuilder.Entity<AnalisisRecurso>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<AsistenciaCapacitacion>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<CapacitacionSst>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<DetalleMonitoreoMip>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<DetalleRemision>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<EntregaEpp>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<EquipoHerramienta>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<InventarioBodega>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<LaborTransaccional>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<Lote>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<MantenimientoCalibracion>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<MaterialPropagacion>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<MonitoreoMip>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<Predio>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<RegistroCosecha>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<RemisionDespacho>().HasQueryFilter(e => e.TenantId == TenantId);
+        modelBuilder.Entity<UmbralAccionFinca>().HasQueryFilter(e => e.TenantId == TenantId);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var tenantId = _tenantProvider?.GetTenantId();
+
+        if (!string.IsNullOrEmpty(tenantId))
+        {
+            foreach (var entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+            {
+                var prop = entry.Properties.FirstOrDefault(p => p.Metadata.Name == "TenantId");
+                if (prop != null && prop.CurrentValue == null)
+                {
+                    prop.CurrentValue = tenantId;
+                }
+            }
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
     }
 }
