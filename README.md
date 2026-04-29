@@ -48,6 +48,22 @@ Este microservicio **delega la autenticación** al sistema central `WS_Auth`.
 
 ---
 
+## 🩺 Monitoreo de Salud (Health Checks)
+
+El microservicio cuenta con un endpoint público para validar rápidamente si la aplicación está en línea y procesando solicitudes. Esto es ideal para configurar pruebas de disponibilidad en servicios de infraestructura en la nube (ej. Render, Docker).
+
+- **Endpoint:** `GET /estado`
+- **Respuesta (JSON):**
+  ```json
+  {
+    "estado": "En línea",
+    "servicio": "WSAgro",
+    "timestamp": "2026-04-29T00:00:00.000Z"
+  }
+  ```
+
+---
+
 ## ⚙️ Configuración (Environment Variables)
 
 Para ejecutar este servicio localmente o en producción (Render/Docker), asegúrese de configurar las siguientes variables de entorno o actualizar el archivo `appsettings.json`:

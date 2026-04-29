@@ -25,6 +25,8 @@ public static class AppBuilderExtend
 
         app.UseHangfireDashboard();
 
+        app.MapGet("/estado", () => Results.Ok(new { estado = "En línea", servicio = "WSAgro", timestamp = DateTime.UtcNow }));
+
         app.MapControllers();
     }
 }
