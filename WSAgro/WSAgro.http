@@ -1,0 +1,6 @@
+@WSAgro_HostAddress = http://localhost:5081
+
+GET {{WSAgro_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
