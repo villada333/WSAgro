@@ -1,0 +1,124 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Yarp.ReverseProxy": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "IpRateLimiting": {
+    "EnableEndpointRateLimiting": true,
+    "StackBlockedRequests": false,
+    "RealIpHeader": "X-Real-IP",
+    "ClientIdHeader": "X-ClientId",
+    "HttpStatusCode": 429,
+    "GeneralRules": [
+      {
+        "Endpoint": "post:/api/auth/login",
+        "Period": "1m",
+        "Limit": 300
+      },
+      {
+        "Endpoint": "*",
+        "Period": "1m",
+        "Limit": 60
+      }
+    ]
+  },
+  "JwtSettingsIssuer": "WS_BET",
+  "JwtSettingsAudience": "APP_ORION",
+  "KeepAlive": {
+    "IntervalSeconds": 10,
+    "Targets": [
+      "https://wsauth.onrender.com/health",
+      "https://wsagro.onrender.com/estado"
+    ]
+  },
+  "ReverseProxy": {
+    "Routes": {
+      "ws-auth-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/api/auth/{**catch-all}"
+        },
+        "Transforms": [{ "PathPattern": "/api/auth/{**catch-all}" }]
+      },
+      "ws-auth-tenants-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/Tenants/{**catch-all}"
+        }
+      },
+      "ws-auth-users-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/AuthUsersCentral/{**catch-all}"
+        }
+      },
+      "ws-auth-usertenants-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/UserTenants/{**catch-all}"
+        }
+      },
+      "ws-auth-audit-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/AuthLoginAttempts/{**catch-all}"
+        }
+      },
+      "ws-auth-mfa-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/AuthMfaRecoveryCodes/{**catch-all}"
+        }
+      },
+      "ws-auth-refreshtokens-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/AuthRefreshTokens/{**catch-all}"
+        }
+      },
+      "ws-auth-encryption-route": {
+        "ClusterId": "ws-auth",
+        "Match": {
+          "Path": "/Encryption/{**catch-all}"
+        }
+      },
+      "ws-agro-route": {
+        "ClusterId": "ws-agro",
+        "Match": {
+          "Path": "/api/agro/{**catch-all}"
+        },
+        "Transforms": [{ "PathPattern": "/{**catch-all}" }]
+      }
+    },
+    "Clusters": {
+      "ws-auth": {
+        "LoadBalancingPolicy": "RoundRobin",
+        "HttpClient": {
+          "RequestHeaderEncoding": "utf-8",
+          "ActivityTimeout": "00:00:30"
+        },
+        "Destinations": {
+          "primary": {
+            "Address": "http://localhost:5001/"
+          }
+        }
+      },
+      "ws-agro": {
+        "LoadBalancingPolicy": "RoundRobin",
+        "HttpClient": {
+          "RequestHeaderEncoding": "utf-8",
+          "ActivityTimeout": "00:00:30"
+        },
+        "Destinations": {
+          "primary": {
+            "Address": "http://localhost:5004/"
+          }
+        }
+      }
+    }
+  }
+}

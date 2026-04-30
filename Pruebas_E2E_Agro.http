@@ -1,0 +1,316 @@
+@gateway = https://wsgw-ltfp.onrender.com
+@TenantId = Agro30042026
+
+# Generación de UUIDs aleatorios para los usuarios en esta sesión de pruebas
+@GerenteId = 11111111-1111-1111-1111-111111111111
+@AgronomoId = 22222222-2222-2222-2222-222222222222
+@OperarioId = 33333333-3333-3333-3333-333333333333
+
+# Generación de UUIDs para las entidades agrícolas (WSAgro)
+@PredioId = aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1
+@LoteId = bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbb1
+@CapacitacionId = cccccccc-cccc-cccc-cccc-cccccccccc11
+@PlagaId = dddddddd-dddd-dddd-dddd-ddddddddddd1
+@InsumoId = eeeeeeee-eeee-eeee-eeee-eeeeeeeeeee1
+
+// =====================================================================
+// FASE 1: SETUP DE USUARIOS Y ROLES (WS_Auth)
+// Basado en el esquema de la base de datos de Auth (Tenants, AuthUsersCentral, UserTenants)
+// =====================================================================
+
+### 1.0 Crear Tenant (Empresa)
+POST {{gateway}}/Tenants
+Content-Type: application/json
+
+{
+  "id": "{{TenantId}}",
+  "name": "Empresa Agro Test",
+  "isActive": true
+}
+
+### 1.1a Encriptar Contraseña Gerente
+# @name encGerente
+POST {{gateway}}/Encryption/encriptar
+Content-Type: application/json
+
+{
+  "texto": "pass123!"
+}
+
+### 1.1b Registrar Usuario: Gerente
+POST {{gateway}}/AuthUsersCentral
+Content-Type: application/json
+
+{
+  "id": "{{GerenteId}}",
+  "email": "gerentePrueba@agrotest.com",
+  "passwordHash": "{{encGerente.response.body.data}}",
+  "isActive": true
+}
+
+### 1.1c Asignar Rol y Tenant al Gerente
+POST {{gateway}}/UserTenants
+Content-Type: application/json
+
+{
+  "userId": "{{GerenteId}}",
+  "tenantId": "{{TenantId}}",
+  "globalRole": "GERENTE"
+}
+
+### 1.2a Encriptar Contraseña Agrónomo
+# @name encAgronomo
+POST {{gateway}}/Encryption/encriptar
+Content-Type: application/json
+
+{
+  "texto": "pass123!"
+}
+
+### 1.2b Registrar Usuario: Agrónomo
+POST {{gateway}}/AuthUsersCentral
+Content-Type: application/json
+
+{
+  "id": "{{AgronomoId}}",
+  "email": "agronomoPrueba@agrotest.com",
+  "passwordHash": "{{encAgronomo.response.body.data}}",
+  "isActive": true
+}
+
+### 1.2c Asignar Rol y Tenant al Agrónomo
+POST {{gateway}}/UserTenants
+Content-Type: application/json
+
+{
+  "userId": "{{AgronomoId}}",
+  "tenantId": "{{TenantId}}",
+  "globalRole": "AGRONOMO"
+}
+
+### 1.3a Encriptar Contraseña Operario
+# @name encOperario
+POST {{gateway}}/Encryption/encriptar
+Content-Type: application/json
+
+{
+  "texto": "pass123!"
+}
+
+### 1.3b Registrar Usuario: Operario
+POST {{gateway}}/AuthUsersCentral
+Content-Type: application/json
+
+{
+  "id": "{{OperarioId}}",
+  "email": "operarioPrueba@agrotest.com",
+  "passwordHash": "{{encOperario.response.body.data}}",
+  "isActive": true
+}
+
+### 1.3c Asignar Rol y Tenant al Operario
+POST {{gateway}}/UserTenants
+Content-Type: application/json
+
+{
+  "userId": "{{OperarioId}}",
+  "tenantId": "{{TenantId}}",
+  "globalRole": "OPERARIO"
+}
+
+// =====================================================================
+// FASE 2: LOGIN Y EXTRACCIÓN DE TOKENS
+// Usando /api/auth/login y capturando la respuesta estándar LoginResponseDTOSalidaDTO
+// =====================================================================
+
+### 2.1 Login Gerente
+# @name loginGerente
+POST {{gateway}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usuario": "gerentePrueba@agrotest.com",
+  "password": "pass123!"
+}
+
+### 2.2 Login Agrónomo
+# @name loginAgronomo
+POST {{gateway}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usuario": "agronomoPrueba@agrotest.com",
+  "password": "pass123!"
+}
+
+### 2.3 Login Operario
+# @name loginOperario
+POST {{gateway}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usuario": "operarioPrueba@agrotest.com",
+  "password": "pass123!"
+}
+
+
+// =====================================================================
+// FASE 3: OPERACIÓN AGRÍCOLA (WSAgro)
+// =====================================================================
+
+### CU-1.01: Registrar Predio (Actor: GERENTE)
+# @name crearPredio
+POST {{gateway}}/api/agro/Predio
+Authorization: Bearer {{loginGerente.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "id": "{{PredioId}}",
+  "nombre": "Finca El Paraiso",
+  "codigoIca": "ICA-{{$timestamp}}",
+  "ubicacionLat": 5.0,
+  "ubicacionLon": -75.0,
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### CU-1.02: Crear Lote (Actor: GERENTE)
+# @name crearLote
+POST {{gateway}}/api/agro/Lote
+Authorization: Bearer {{loginGerente.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "id": "{{LoteId}}",
+  "predioId": "{{PredioId}}",
+  "nombreNumero": "Lote {{$randomInt 10 99}}",
+  "areaHa": 5.5,
+  "cultivo": "Aguacate Hass",
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### CU-3.01: Registrar Capacitación SST (Actor: AGRONOMO)
+# @name crearCapacitacion
+POST {{gateway}}/api/agro/CapacitacionSst
+Authorization: Bearer {{loginAgronomo.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "id": "{{CapacitacionId}}",
+  "tema": "Uso Correcto de Plaguicidas",
+  "fecha": "{{$datetime iso8601}}",
+  "evidenciaUrl": "http://ejemplo.com/firma",
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### CU-3.02: Asistencia SST (Actor: AGRONOMO inscribe a OPERARIO)
+POST {{gateway}}/api/agro/AsistenciaCapacitacion
+Authorization: Bearer {{loginAgronomo.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "capacitacionId": "{{CapacitacionId}}",
+  "usuarioId": "{{OperarioId}}", 
+  "firmaBase64": "FirmaDigital...",
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### Preparar Datos: Catálogo de Plagas
+POST {{gateway}}/api/agro/CatalogoPlagaEnfermedad
+Authorization: Bearer {{loginAgronomo.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "id": "{{PlagaId}}",
+  "nombreComun": "Broca del aguacate",
+  "nombreCientifico": "Heilipus lauri",
+  "tipoAgente": "Insecto",
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### CU-5.01: Definir Umbral MIP (Actor: AGRONOMO)
+POST {{gateway}}/api/agro/UmbralAccionFinca
+Authorization: Bearer {{loginAgronomo.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "plagaId": "{{PlagaId}}",
+  "incidenciaMaxima": 5.0,
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### CU-5.02: Registrar Monitoreo MIP (Actor: OPERARIO)
+# @name crearMonitoreo
+POST {{gateway}}/api/agro/MonitoreoMip
+Authorization: Bearer {{loginOperario.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "loteId": "{{LoteId}}",
+  "fechaMonitoreo": "{{$datetime iso8601}}",
+  "estFenologico": "Floracion",
+  "plantasEvaluadas": 20,
+  "operarioId": "{{OperarioId}}",
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### Preparar Datos: Catálogo de Insumos
+POST {{gateway}}/api/agro/CatalogoInsumoIca
+Authorization: Bearer {{loginGerente.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "id": "{{InsumoId}}",
+  "registroIca": "ICA-{{$timestamp}}",
+  "nombreComercial": "Controlador Bio",
+  "ingredienteActivo": "Bacillus thuringiensis",
+  "categoriaTox": "III",
+  "tipoInsumo": "Biologico",
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### CU-6.02: Labor Transaccional / Fumigación (Actor: OPERARIO)
+# @name crearFumigacion
+POST {{gateway}}/api/agro/LaborTransaccional
+Authorization: Bearer {{loginOperario.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "id": "{{$guid}}",
+  "loteId": "{{LoteId}}",
+  "tipoLabor": "Fumigacion",
+  "fechaAplicacion": "{{$datetime iso8601}}",
+  "insumoId": "{{InsumoId}}",
+  "dosisAplicada": 2.5,
+  "operarioId": "{{OperarioId}}",
+  "agronomoId": "{{AgronomoId}}",
+  "tarjetaProfAgronomo": "TP-12345",
+  "pCarencia": 15,
+  "pReingreso": 24,
+  "createdAt": "{{$datetime iso8601}}"
+}
+
+### CU-7.01: Registrar Cosecha (Actor: OPERARIO)
+POST {{gateway}}/api/agro/RegistroCosecha
+Authorization: Bearer {{loginOperario.response.body.data.token}}
+X-Company-ID: {{TenantId}}
+Content-Type: application/json
+
+{
+  "id": "{{$guid}}",
+  "loteId": "{{LoteId}}",
+  "fechaCosecha": "{{$datetime iso8601}}",
+  "cantidad": 1500.5,
+  "loteTrazInterno": "TRZ-{{$timestamp}}",
+  "liberado": true,
+  "operarioId": "{{OperarioId}}",
+  "createdAt": "{{$datetime iso8601}}"
+}

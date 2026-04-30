@@ -70,7 +70,7 @@ public class LaborTransaccionalImpl : ILaborTransaccional
         catch (Exception ex)
         {
             vo_Salida.Codigo = 0;
-            vo_Salida.Mensaje = ex.Message;
+            vo_Salida.Mensaje = ex.InnerException?.Message ?? ex.Message;
         }
         return vo_Salida;
     }

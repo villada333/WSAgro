@@ -1,0 +1,2331 @@
+{
+"openapi": "3.0.1",
+"info": {
+"title": "WSAuth v1.0.0",
+"version": "v1.0.0"
+},
+"paths": {
+"/api/auth/login": {
+"post": {
+"tags": [
+"Auth"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/LoginRequestDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/LoginRequestDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/LoginRequestDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/LoginResponseDTOSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/LoginResponseDTOSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/LoginResponseDTOSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/api/auth/refresh": {
+"post": {
+"tags": [
+"Auth"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/RefreshTokenRequestDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/RefreshTokenRequestDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/RefreshTokenRequestDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/LoginResponseDTOSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/LoginResponseDTOSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/LoginResponseDTOSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthLoginAttempts": {
+"get": {
+"tags": [
+"AuthLoginAttempts"
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTOListSalidaDTO"
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"AuthLoginAttempts"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"AuthLoginAttempts"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"AuthLoginAttempts"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthLoginAttempts/{id}": {
+"get": {
+"tags": [
+"AuthLoginAttempts"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTOListSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthLoginAttempts/varios": {
+"post": {
+"tags": [
+"AuthLoginAttempts"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthMfaRecoveryCodes": {
+"get": {
+"tags": [
+"AuthMfaRecoveryCodes"
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTOListSalidaDTO"
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"AuthMfaRecoveryCodes"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"AuthMfaRecoveryCodes"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"AuthMfaRecoveryCodes"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthMfaRecoveryCodes/{id}": {
+"get": {
+"tags": [
+"AuthMfaRecoveryCodes"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTOListSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthMfaRecoveryCodes/varios": {
+"post": {
+"tags": [
+"AuthMfaRecoveryCodes"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthRefreshTokens": {
+"get": {
+"tags": [
+"AuthRefreshTokens"
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTOListSalidaDTO"
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"AuthRefreshTokens"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"AuthRefreshTokens"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"AuthRefreshTokens"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthRefreshTokens/{id}": {
+"get": {
+"tags": [
+"AuthRefreshTokens"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTOListSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthRefreshTokens/varios": {
+"post": {
+"tags": [
+"AuthRefreshTokens"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthUsersCentral": {
+"get": {
+"tags": [
+"AuthUsersCentral"
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTOListSalidaDTO"
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"AuthUsersCentral"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"AuthUsersCentral"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"AuthUsersCentral"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthUsersCentral/{id}": {
+"get": {
+"tags": [
+"AuthUsersCentral"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/AuthUsersCentralDTOListSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/AuthUsersCentral/varios": {
+"post": {
+"tags": [
+"AuthUsersCentral"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/Encryption/encriptar": {
+"post": {
+"tags": [
+"Encryption"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/EncryptionRequestDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/EncryptionRequestDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/EncryptionRequestDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/Encryption/desencriptar": {
+"post": {
+"tags": [
+"Encryption"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/EncryptionRequestDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/EncryptionRequestDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/EncryptionRequestDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/Tenants": {
+"get": {
+"tags": [
+"Tenants"
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTOListSalidaDTO"
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"Tenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"Tenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"Tenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/Tenants/{id}": {
+"get": {
+"tags": [
+"Tenants"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/TenantsDTOListSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/Tenants/varios": {
+"post": {
+"tags": [
+"Tenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/TenantsDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/UserTenants": {
+"get": {
+"tags": [
+"UserTenants"
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTOListSalidaDTO"
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"UserTenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+},
+"application/*+json": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"UserTenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"UserTenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "string",
+"format": "uuid"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/UserTenants/{id}": {
+"get": {
+"tags": [
+"UserTenants"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTOListSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTOListSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/UserTenantsDTOListSalidaDTO"
+}
+}
+}
+}
+}
+}
+},
+"/UserTenants/varios": {
+"post": {
+"tags": [
+"UserTenants"
+],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+}
+},
+"text/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+}
+},
+"application/*+json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+}
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "OK",
+"content": {
+"text/plain": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+},
+"text/json": {
+"schema": {
+"$ref": "#/components/schemas/StringSalidaDTO"
+}
+}
+}
+}
+}
+}
+}
+},
+"components": {
+"schemas": {
+"AuthLoginAttemptsDTO": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string",
+"format": "uuid"
+},
+"userId": {
+"type": "string",
+"format": "uuid",
+"nullable": true
+},
+"emailAttempted": {
+"type": "string",
+"nullable": true
+},
+"ipAddress": {
+"type": "string",
+"nullable": true
+},
+"userAgent": {
+"type": "string",
+"nullable": true
+},
+"isSuccess": {
+"type": "boolean",
+"nullable": true
+},
+"createdAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"AuthLoginAttemptsDTOListSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthLoginAttemptsDTO"
+},
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"AuthMfaRecoveryCodesDTO": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string",
+"format": "uuid"
+},
+"userId": {
+"type": "string",
+"format": "uuid",
+"nullable": true
+},
+"codeHash": {
+"type": "string",
+"nullable": true
+},
+"isUsed": {
+"type": "boolean",
+"nullable": true
+},
+"createdAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"AuthMfaRecoveryCodesDTOListSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthMfaRecoveryCodesDTO"
+},
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"AuthRefreshTokensDTO": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string",
+"format": "uuid"
+},
+"userId": {
+"type": "string",
+"format": "uuid",
+"nullable": true
+},
+"tokenHash": {
+"type": "string",
+"nullable": true
+},
+"expiresAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+},
+"isRevoked": {
+"type": "boolean",
+"nullable": true
+},
+"replacedByTokenHash": {
+"type": "string",
+"nullable": true
+},
+"createdAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"AuthRefreshTokensDTOListSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthRefreshTokensDTO"
+},
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"AuthUsersCentralDTO": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string",
+"format": "uuid"
+},
+"email": {
+"type": "string",
+"nullable": true
+},
+"passwordHash": {
+"type": "string",
+"nullable": true
+},
+"isActive": {
+"type": "boolean",
+"nullable": true
+},
+"mfaEnabled": {
+"type": "boolean",
+"nullable": true
+},
+"mfaSecret": {
+"type": "string",
+"nullable": true
+},
+"failedAttempts": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"lockedUntil": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+},
+"tokenVersion": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"createdAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+},
+"updatedAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"AuthUsersCentralDTOListSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/AuthUsersCentralDTO"
+},
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"EncryptionRequestDTO": {
+"type": "object",
+"properties": {
+"texto": {
+"type": "string",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"LoginRequestDTO": {
+"type": "object",
+"properties": {
+"usuario": {
+"type": "string",
+"nullable": true
+},
+"password": {
+"type": "string",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"LoginResponseDTO": {
+"type": "object",
+"properties": {
+"token": {
+"type": "string",
+"nullable": true
+},
+"refreshToken": {
+"type": "string",
+"nullable": true
+},
+"expira": {
+"type": "string",
+"format": "date-time"
+}
+},
+"additionalProperties": false
+},
+"LoginResponseDTOSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"$ref": "#/components/schemas/LoginResponseDTO"
+}
+},
+"additionalProperties": false
+},
+"RefreshTokenRequestDTO": {
+"type": "object",
+"properties": {
+"refreshToken": {
+"type": "string",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"StringSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"type": "string",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"TenantsDTO": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string",
+"nullable": true
+},
+"name": {
+"type": "string",
+"nullable": true
+},
+"isActive": {
+"type": "boolean",
+"nullable": true
+},
+"createdAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"TenantsDTOListSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/TenantsDTO"
+},
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"UserTenantsDTO": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string",
+"format": "uuid"
+},
+"userId": {
+"type": "string",
+"format": "uuid",
+"nullable": true
+},
+"tenantId": {
+"type": "string",
+"nullable": true
+},
+"globalRole": {
+"type": "string",
+"nullable": true
+},
+"createdAt": {
+"type": "string",
+"format": "date-time",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"UserTenantsDTOListSalidaDTO": {
+"type": "object",
+"properties": {
+"codigo": {
+"type": "integer",
+"format": "int32"
+},
+"mensaje": {
+"type": "string",
+"nullable": true
+},
+"data": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserTenantsDTO"
+},
+"nullable": true
+}
+},
+"additionalProperties": false
+}
+}
+}
+}

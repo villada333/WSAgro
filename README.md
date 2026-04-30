@@ -77,6 +77,23 @@ El microservicio cuenta con un endpoint público para validar rápidamente si la
 
 ---
 
+## 🧪 Pruebas Automatizadas (E2E y TDD)
+
+El proyecto incluye un entorno de pruebas automatizadas diseñado para validar los flujos operativos reales a través del API Gateway en producción.
+
+- **Estrategia Teórica:** Todos los casos de uso están definidos en [Contexto/PruebasCasosDeUso.md](Contexto/PruebasCasosDeUso.md).
+- **Ejecución Técnica:** Las pruebas se ejecutan directamente en VS Code utilizando el archivo [Pruebas_E2E_Agro.http](Pruebas_E2E_Agro.http) y la extensión **REST Client**.
+
+### Flujo de Pruebas y Solución de Integridad de Datos:
+1. **Setup de Usuarios y Roles:** El script registra en `WS_Auth` a un Gerente, un Agrónomo y un Operario bajo un mismo Tenant.
+2. **Login y Tokens JWT:** Extrae y almacena automáticamente los JWT para su uso en cabeceras de autorización.
+3. **Manejo de UUIDs Estáticos:** Para evitar fallos de integridad referencial (Foreign Keys) en PostgreSQL ocasionados por la re-evaluación dinámica de variables como `{{$guid}}` en REST Client, las pruebas utilizan **UUIDs fijos** (e.g. `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1`) combinados con variables dinámicas de tiempo (`{{$timestamp}}`) para evadir colisiones de restricciones `UNIQUE`.
+4. **Catálogos Maestros:** Antes de ejecutar las operaciones, se insertan los datos base en los catálogos (`CatalogoPlagaEnfermedad` y `CatalogoInsumoIca`) garantizando que existan al ser referenciados.
+5. **Alineación Estricta de DTOs:** Todas las peticiones JSON coinciden al 100% con los modelos de Entity Framework Core, garantizando la inserción de campos obligatorios `NOT NULL` (como `id`, `createdAt`, `pCarencia`, etc.).
+6. **Automatización Nativa PowerShell:** Como alternativa a REST Client, se provee el script ejecutable `Run-All.ps1` que decodifica los JWT asimétricos para extraer los `userId` reales, ejecutando los 10 endpoints críticos del negocio de forma secuencial y automatizada arrojando los códigos de éxito.
+
+---
+
 ## ⚙️ Configuración (Environment Variables)
 
 Para ejecutar este servicio localmente o en producción (Render/Docker), asegúrese de configurar las siguientes variables de entorno o actualizar el archivo `appsettings.json`:
